@@ -42,4 +42,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation("com.github.ihsanbal:LoggingInterceptor:3.1.0") {
+        exclude(group = "org.json", module = "json")
+    }
 }

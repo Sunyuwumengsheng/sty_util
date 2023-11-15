@@ -1,19 +1,25 @@
 package com.sty.sty_uti.http
 
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import java.util.concurrent.ConcurrentHashMap
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 object Net {
+    private val retrofit:Retrofit
+    init {
+     retrofit = createRetrofit()
+    }
 
 
-    val concurrentHashMap:ConcurrentHashMap<String,Retrofit> = ConcurrentHashMap()
+   private fun createRetrofit():Retrofit{
+     return   Retrofit.Builder()
+            .baseUrl(NetConfig.baseUrl)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(NetConfig.okHttpClient)
+            .build()
+    }
 
+    fun <T> create(serviceClass:Class<T>):T = retrofit.create(serviceClass)
 
-
-
-
-
-
+    inline fun <reified T> create():T = create(T::class.java)
 
 }
